@@ -1,0 +1,40 @@
+{
+
+  "name": "Gitprint",
+  "version": "0.1",
+  "manifest_version": 2,
+  "description": "Add a fancy Print Button to the issues page of github",
+  "icons": { "16": "icons/icon16.png"
+             },
+
+
+  /*****************************************************************************
+   PERMISSIONS
+   ****************************************************************************/
+
+  // http://code.google.com/chrome/extensions/manifest.html#permissions
+  "permissions": [
+    "tabs" , "*://github.com/*"
+  ],
+
+
+  /*****************************************************************************
+   IMPLEMENTING THE INNARDS OF YOUR EXTENSION
+   ****************************************************************************/
+
+  "content_scripts": [
+    {
+      "matches": ["*://github.com/*"],
+      "js": ["js/main.js"],
+      "include_globs": ["*://github.com/*/*/issues*"],
+      "exclude_globs": ["*://github.com/*/*/issues/*"]
+    }
+  ]
+
+
+  /*****************************************************************************
+   FINISHING AND DISTRIBUTING YOUR EXTENSION
+   ****************************************************************************/
+
+
+}
