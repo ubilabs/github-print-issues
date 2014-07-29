@@ -1,7 +1,8 @@
-var buttons = document.querySelector('.button-wrap'),
+var buttons = document.querySelector('.table-list-header-meta'),
   printButton = document.createElement('a'),
   print = function(){
-    var elements = document.querySelectorAll('.issue-list-item.selected'),
+    console.log('print');
+    var elements = document.querySelectorAll('.js-issue-row.selected'),
       tempElement,
       style = '\
     body, html{\
@@ -58,7 +59,7 @@ var buttons = document.querySelector('.button-wrap'),
       ',
       labelsElement,
       labelsCounter,
-      title = document.querySelector('.js-repo-home-link').innerHTML || '',
+      title = document.querySelector('.issue-title-link').innerHTML || '',
       counter = 0,
       handle = function(tempElement) {
         var tag = [],
@@ -99,8 +100,8 @@ var buttons = document.querySelector('.button-wrap'),
         for (labelsCounter = 0; labelsCounter < labelsElements.length; labelsCounter++) {
 
           labelsElement = labelsElements[labelsCounter];
-          if (labelsElement.innerHTML.match(/\#/g)){
-            devision = labelsElement.innerHTML.replace('#', '');
+          if (labelsElement.innerHTML.match(/\@/g)){
+            devision = labelsElement.innerHTML.replace('@', '');
             devision = devision.replace(devision[0], devision[0].toUpperCase());
           } else if (labelsElement.innerHTML.match(/\./g)){
             complexity = labelsElement.innerHTML.replace('.', '');
@@ -112,8 +113,8 @@ var buttons = document.querySelector('.button-wrap'),
         }
 
         temp = {
-          id: tempElement.querySelector('.list-group-item-number').innerHTML,
-          title: tempElement.querySelector('.list-group-item-name a').innerHTML,
+          id: tempElement.querySelector('.opened-by').innerHTML.trim().split(' ')[0],
+          title: tempElement.querySelector('.issue-title a').innerHTML,
           tags: tag || '',
           division: devision || '',
           complexity: complexity || ''
@@ -134,6 +135,6 @@ var buttons = document.querySelector('.button-wrap'),
   }
 printButton.innerHTML = 'Print';
 window.location.hash = 'print';
-printButton.classList.add('minibutton', 'js-mass-assign-button', 'disabled');
+//printButton.classList.add('minibutton', 'js-mass-assign-button', 'disabled');
 printButton.addEventListener('click', print);
 buttons.appendChild(printButton);
