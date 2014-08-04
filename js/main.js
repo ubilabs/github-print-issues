@@ -1,7 +1,6 @@
 var buttons = document.querySelector('.table-list-header-meta'),
   printButton = document.createElement('a'),
   print = function(){
-    console.log('print');
     var elements = document.querySelectorAll('.js-issue-row.selected'),
       tempElement,
       style = '\
@@ -36,17 +35,22 @@ var buttons = document.querySelector('.table-list-header-meta'),
     }\
     .project,\
     .division,\
-    .complexity,\
-    .tags,\
     .milestone,\
     .id {\
       display: inline-block;\
       width: 49%;\
     }\
+    .complexity{\
+      display: inline-block;\
+      width: 19%;\
+    }\
+    .tags{\
+      width: 79%;\
+      display: inline-block;\
+    }\
     .division,\
     .tags,\
     .id {\
-      width: 49%;\
       text-align: right;\
     }\
     .id {\
@@ -59,7 +63,7 @@ var buttons = document.querySelector('.table-list-header-meta'),
       ',
       labelsElement,
       labelsCounter,
-      title = document.querySelector('.issue-title-link').innerHTML || '',
+      title = document.querySelector('.js-current-repository').innerHTML || '',
       counter = 0,
       handle = function(tempElement) {
         var tag = [],
@@ -67,32 +71,11 @@ var buttons = document.querySelector('.table-list-header-meta'),
           complexity,
           tempTag,
           labelsElements = tempElement.querySelectorAll('.label'),
+          milestone = tempElement.querySelector('.milestone-link') ? tempElement.querySelector('.milestone-link').innerText.trim() : '';
           temp = {},
           oReq = new XMLHttpRequest(),
           href = tempElement.querySelector('a').href,
           req = function() {
-            var html = document.createElement('div'),
-              text;
-            html.innerHTML = this.responseText;
-            text = html.querySelector('.js-milestone-infobar-item-wrapper .css-truncate-target');
-            text = text && text.innerHTML;
-            temp.milestone = text || '';
-            document.body.innerHTML += '\
-  <div class="card">\
-  <div class="header">\
-    <div class="project">' + title + '</div>\
-    <div class="division">' + temp.division + '</div>\
-  </div> \
-  <div class="sub">\
-    <div class="milestone">' + temp.milestone + '</div> \
-    <div class="id">' + temp.id + '</div>\
-  </div>\
-  <div class="title">'+ temp.title + '</div> \
-  <div class="footer"> \
-    <div class="complexity">' + temp.complexity +'</div> \
-    <div class="tags">'+ temp.tags.join(', ') + '</div>\
-  </div>\
-  </div>';
           };
         oReq.onload = req;
         oReq.open('get', href, true);
@@ -119,6 +102,22 @@ var buttons = document.querySelector('.table-list-header-meta'),
           division: devision || '',
           complexity: complexity || ''
         };
+            document.body.innerHTML += '\
+  <div class="card">\
+  <div class="header">\
+    <div class="project">' + title + '</div>\
+    <div class="division">' + temp.division + '</div>\
+  </div> \
+  <div class="sub">\
+    <div class="milestone">' + milestone + '</div> \
+    <div class="id">' + temp.id + '</div>\
+  </div>\
+  <div class="title">'+ temp.title + '</div> \
+  <div class="footer"> \
+    <div class="complexity">' + temp.complexity +'</div> \
+    <div class="tags">'+ temp.tags.join(', ') + '</div>\
+  </div>\
+  </div>';
 
 
       };
